@@ -1,12 +1,11 @@
 <template>
   <div>
     <el-form :model="loginForm " status-icon :rules="rules" @submit.native.prevent="login" ref="loginForm">
-      <el-form-item label="Email" prop="username">
+      <el-form-item label="Email" prop="username" :required="false">
         <el-input
           placeholder="Email"
           prefix-icon="el-icon-message"
           v-model="loginForm.username"
-          required
         ></el-input>
       </el-form-item>
       <el-form-item label="Password" prop="password">
@@ -17,7 +16,6 @@
           autocomplete="off"
           v-model="loginForm.password"
           show-password
-          required
         ></el-input>
       </el-form-item>
       <div class="item-position">
@@ -30,31 +28,42 @@
 <script>
 export default {
   data() {
-    var validatePass = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('Please input password'));
-        } else {
-          callback();
-        }
-      };
     return {
       loginForm: {
         username: '',
         password: ''
       },
-      rules:{
-        pass: [
-            { validator: validatePass, trigger: 'blur' }
-          ],
+      rules: {
+        username: [
+          { required: true, message: 'Please enter Email', trigger: 'blur' },
+          { type: 'email', message: 'Please enter a valid Email address', trigger: ['blur', 'change'] }
+        ],
+        password: [
+          { required: true, message: 'Please enter Password', trigger: 'blur' }
+        ]
       }
     };
   },
   methods: {
+    open2() {
+        this.$message({
+          message: 'You have successfully logged in.',
+          type: 'success'
+        });
+      },
     login() {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          alert('sumbit!');
+          //this.axios.post('',this.loginForm).then((resp)=>{
+            //let data=resp.data;
+            //if(data.success){
+              //this.loginForm={};
+              //this.open2();
+            //}
+          //});
+          //alert('sumbit!');
           // login logic, send request to the backend
+          this.open2();
           console.log('Login');
           console.log('Username：', this.loginForm.username);
           console.log('Password：', this.loginForm.password);
@@ -66,7 +75,7 @@ export default {
         }
       });
     }
-  }
+  },
 };
 </script>
 

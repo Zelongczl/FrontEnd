@@ -1,20 +1,18 @@
 <template>
   <div>
-    <el-form :model="registerForm " ref="registerForm" @submit.native.prevent="register">
+    <el-form :model="registerForm " :rules="rules" ref="registerForm" @submit.native.prevent="register">
       <el-form-item prop="useremail" >
         <el-input
-          placeholder="Name"
+          placeholder="Email"
           prefix-icon="el-icon-message"
           v-model="registerForm.useremail"
-          required
         ></el-input>
       </el-form-item>
       <el-form-item prop="username">
         <el-input
-          placeholder="Email"
-          prefix-icon="el-icon-message"
+          placeholder="Name"
+          prefix-icon="el-icon-user"
           v-model="registerForm.username"
-          required
         ></el-input>
       </el-form-item>
       <el-row gutter="5">
@@ -25,10 +23,12 @@
       </el-form-item></el-col>
       <el-col :span="5">
 <!-- Send CAPTCHA button -->
-<el-form-item>
-        <el-button v-if="!showCountdown" type="primary" @click="sendVerificationCode">Send</el-button>
-        <el-button v-else disabled>{{ countdown }}s</el-button>
-      </el-form-item>
+<div class="button-position">
+    <button class="el-button el-button--primary el-button--medium" :class="{ 'is-disabled': showCountdown }" type="button" @click="sendVerificationCode">
+      <span v-if="showCountdown">{{ countdown }}s</span>
+      <span v-else>Send</span>
+    </button>
+  </div>
       </el-col>
       </el-row>
       
@@ -38,7 +38,6 @@
           prefix-icon="el-icon-key"
           v-model="registerForm.password"
           show-password
-          required
         ></el-input>
       </el-form-item>
       <div class="item-position">
@@ -60,6 +59,21 @@ export default {
       },
       showCountdown: false, 
       countdown: 30, 
+      rules: {
+        username: [
+          { required: true, message: 'Please enter Username', trigger: 'blur' }
+        ],
+        useremail: [
+          { required: true, message: 'Please enter Email', trigger: 'blur' },
+          { type: 'email', message: 'Please enter a valid Email address', trigger: ['blur', 'change'] }
+        ],
+        verificationCode:[
+        { required: true, message: 'Please enter Code', trigger: 'blur' },
+        ],
+        password: [
+          { required: true, message: 'Please enter Password', trigger: 'blur' }
+        ]
+      }
     };
   },
   methods: {
@@ -108,6 +122,10 @@ export default {
   display: flex;
   justify-content: center;
 }
+.button-position {
+  display: flex;
+  justify-content: center;
+}
 .custom-button {
   position: center;
   display: inline-block;
@@ -119,6 +137,53 @@ export default {
   border-radius: 20px; 
   cursor: pointer;
   transition: background-color 0.3s ease; 
+}
+.el-button {
+  display: inline-block;
+  padding: 12px 19px; /* 调整按钮大小 */
+  font-size: 15px; /* 调整按钮字体大小 */
+  border-radius: 4px; /* 调整按钮边框圆角 */
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  transition: .1s;
+  outline: none;
+  border: 1px solid #dcdfe6;
+  background-color: #ffffff;
+  color: #606266;
+  border-color: #dcdfe6;
+}
+
+.el-button.el-button--primary {
+  background-color: #F9A51C;
+  color: black;
+  border-color: #F9A51C;
+}
+
+.el-button.is-disabled {
+  background-color: #f5f7fa;
+  color: #c0c4cc;
+  border-color: #dcdfe6;
+  cursor: not-allowed;
+}
+
+.el-button span {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 5px;
+}
+
+.el-button i.el-icon-loading {
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+/* 按钮 hover 效果 */
+.el-button:hover {
+  background-color: #F9A51C;
+  color: #ffffff;
+  border-color: #F9A51C;
 }
 
 .el-form {
