@@ -1,7 +1,7 @@
 <template>
     <el-form :model="formData" :rules="rules" ref="form" @submit.native.prevent="handleSubmit">
       <el-form-item label="Email" prop="email">
-        <el-input v-model="formData.email" placeholder="Enter your email"></el-input>
+        <el-input v-model="formData.email" autocomplete="off" placeholder="Enter your email"></el-input>
       </el-form-item>
       
       <el-row gutter=5>

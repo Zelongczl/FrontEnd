@@ -6,6 +6,7 @@
           placeholder="Email"
           prefix-icon="el-icon-message"
           v-model="registerForm.useremail"
+          autocomplete="off"
         ></el-input>
       </el-form-item>
       <el-form-item prop="username">
@@ -13,6 +14,7 @@
           placeholder="Name"
           prefix-icon="el-icon-user"
           v-model="registerForm.username"
+          autocomplete="off"
         ></el-input>
       </el-form-item>
       <el-row gutter="5">
@@ -37,6 +39,7 @@
           placeholder="Password"
           prefix-icon="el-icon-key"
           v-model="registerForm.password"
+          autocomplete="off"
           show-password
         ></el-input>
       </el-form-item>

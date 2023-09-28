@@ -6,6 +6,7 @@
           placeholder="Email"
           prefix-icon="el-icon-message"
           v-model="loginForm.username"
+          autocomplete="off"
         ></el-input>
       </el-form-item>
       <el-form-item label="Password" prop="password">
@@ -54,7 +55,7 @@ export default {
     login() {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          //this.axios.post('',this.loginForm).then((resp)=>{
+          //this.axios.post('https://locallost:8080',this.loginForm).then((resp)=>{
             //let data=resp.data;
             //if(data.success){
               //this.loginForm={};
