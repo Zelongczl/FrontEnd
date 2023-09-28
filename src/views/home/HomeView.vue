@@ -8,12 +8,56 @@
       </div>
 
       <div class="lottie">
-        <lottie
+        <div class="lottie-structure" @click="showModal = true">
+          <lottie
           :options="defaultOptions"
           :height="50"
           :width="50"
           v-on:animCreated="handleAnimation"
-        />
+        ></lottie>
+        </div>
+        <div v-if="showModal" class="modal" @click="closeModalOutside">
+        <!-- Modal content -->
+        <div class="modal-content" @click.stop>
+          <div v-if="activeTab === 'register' || activeTab === 'passwordReset'">
+            <button class="back-button" @click="switchTab('login')">
+            <div class="back-button-container">
+             <img src="../../assets/back.png" alt="Your Image" />
+          </div>
+          </button>
+          </div>
+          <div class="image-container">
+             <img src="../../assets/shrine_logo.png" alt="Your Image"/>
+          </div>
+          <button class="close-button" @click="closeModalAndReset">
+            <div class="button-container">
+             <img src="../../assets/cross.png" alt="Your Image" />
+          </div>
+          </button>
+
+        <!-- Login and Registration Components -->
+        <div v-if="activeTab === 'login'">
+          <LoginForm @loginSuccess="closeModal" />
+        </div>
+        <div v-else-if="activeTab === 'passwordReset'">
+          <FormData @resetSuccess="switchTab('login')" />
+        </div>
+        <div v-else>
+          <RegisterForm @registerSuccess="closeModal" />
+        </div>
+        <div v-if="activeTab === 'login'">
+          <div class="centered-text" @click="switchTab('passwordReset')">
+              <h2>Forgot Password</h2>
+            </div>
+            <div class="register-text">
+              <h2>I don't have account? </h2>
+              <div class="register-centered-text" @click="switchTab('register')">
+              <h2>Create Account</h2>
+            </div>
+            </div>
+          </div>
+      </div>
+    </div>
       </div>
 
       <div class="circle"></div>
@@ -121,10 +165,15 @@ import MainView from "./MainView.vue";
 import TabView from "./TabView.vue";
 import Lottie from "./lottie.vue";
 import * as animationData from "../../assets/lottie/login.json";
+import LoginForm from '../../components/LoginForm.vue';
+import RegisterForm from "../../components/RegisterForm.vue";
+import FormData from "../../components/PasswordReset.vue";
 export default {
-  components: { MainView, TabView, lottie: Lottie },
+  components: { MainView, TabView, lottie: Lottie, LoginForm, RegisterForm,FormData},
   data() {
     return {
+      showModal:false,
+      activeTab:"login",
       mainImg: require("../../assets/main_exh/169081158264c7bcbe3cf55408.jpg"),
       carouselLeft: [
         require("../../assets/main_exh/168887812964aa3c3138945507.jpg"),
@@ -578,6 +627,26 @@ export default {
     this.getAll();
   },
   methods: {
+    closeModal(){
+      this.showModal = false;
+      this.activeTab = 'login';
+    },
+    switchTab(tab) {
+      this.activeTab = tab;
+    },
+    closeModalOutside(event) {
+      // Check if the target of the click is within the content area of the pop-up window
+      const modalContent = document.querySelector(".modal-content");
+      if (!modalContent.contains(event.target)) {
+        this.showModal = false;
+        this.activeTab = 'login';
+      }
+    },
+    closeModalAndReset() {
+      // Close the pop-up and reset the data
+      this.showModal = false;
+      this.activeTab = 'login';
+    },
     sortBy(order) {
       if (this.sortOrder !== order) {
         this.sortOrder = order;
@@ -654,6 +723,117 @@ body {
   left: 1185px;
   top: 92px;
   z-index: 1;
+}
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  cursor: default;
+}
+.centered-text {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  color: #F9A51C;
+  cursor: pointer;
+  position: relative;
+  padding-bottom: 10px;
+  font-size: 14px;
+}
+.register-centered-text {
+  display: flex;
+  justify-content: center; 
+  color: #F9A51C;
+  cursor: pointer;
+  position: relative;
+  font-size: 14px;
+  padding-left: 7px;
+}
+.register-text {
+  display: flex;
+  justify-content: center; 
+  color: grey;
+  cursor: pointer;
+  position: relative;
+  font-size: 16px;
+}
+.close-button{
+  position: absolute;
+  size: 10px;
+  top:10px;
+  right: 10px;
+  background-color: transparent;
+  cursor: pointer;
+}
+.image-container {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  height: 100px; 
+}
+
+.image-container img {
+  padding-right: 80px;
+  padding-left: 80px;
+  padding-top: 20px;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+}
+.button-container {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  height: 20px; 
+}
+
+.button-container img {
+  max-width: 20px;
+  max-height: 20px;
+  width: auto;
+  height: auto;
+  padding-right: 15px;
+  padding-top: 20px;
+}
+.back-button-container {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  height: 20px; 
+}
+
+.back-button-container img {
+  max-width: 20px;
+  max-height: 20px;
+  width: auto;
+  height: auto;
+  padding-right: 15px;
+}
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: black;
+  padding: 20px;
+  padding-bottom: 70px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  border-radius: 10px;
+}
+.back-button {
+  position: relative;
+  size: 10px;
+  background-color: transparent;
+  cursor: pointer;
 }
 .circle {
   width: 52px;
