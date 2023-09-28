@@ -722,7 +722,7 @@ body {
   position: absolute;
   left: 1185px;
   top: 92px;
-  z-index: 1;
+  z-index: 5;
 }
 .modal {
   position: fixed;
@@ -733,6 +733,7 @@ body {
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 9999;
   cursor: default;
+  backdrop-filter: blur(2px);
 }
 .centered-text {
   display: flex;
@@ -828,6 +829,7 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   z-index: 9999;
   border-radius: 10px;
+  backdrop-filter: none;
 }
 .back-button {
   position: relative;
