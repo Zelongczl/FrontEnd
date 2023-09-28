@@ -5,6 +5,7 @@
         </div>
         <div class="right-box">
             <div class="item">
+                <img :src="img" alt="">
                 <h1>{{info.title }}</h1>
                 <span style="margin-top: 10px;" v-for="author in info.authors" :key="author.id">{{author.name + "&nbsp;&nbsp;&nbsp;"}}</span>
             </div>

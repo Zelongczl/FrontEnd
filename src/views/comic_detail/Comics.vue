@@ -1,0 +1,81 @@
+<template>
+  <div class="home">
+    <div class="nav"> 
+      <img @click="goBack" src="../../assets/back.png"  style="background-color: #ffe100; width: 50px; float: left;border-radius: 50%;" alt="">
+    </div>
+   <div class="image-box">
+    <img class="image" v-for="i in list" style="" :src="i.image" alt="">
+    <button class="reward">TIP CREATOR</button>
+   </div>
+  </div>
+</template>
+
+<script>
+// @ is an alias to /src
+import HelloWorld from '@/components/HelloWorld.vue'
+
+export default {
+  name: 'HomeView',
+  components: {
+    HelloWorld
+  },
+  data() {
+    return {
+      list:[{
+        image:require("../../assets/7191c5f60e834caab080dc4925dc3a5.jpg"),
+        pageNum:1
+      },
+      {
+        image:require("../../assets/7191c5f60e834caab080dc4925dc3a5.jpg"),
+        pageNum:1
+      }]
+    }
+  },
+  methods:{
+    goBack() {
+      this.$router.go(-1); // 返回上一页
+    },
+  }
+}
+</script>
+<style>
+.reward{
+  margin: 2% auto;
+  width: 140px;
+  height: 50px;
+  border-radius: 10px;
+  background-color: rgba(249, 167, 32, 1);
+}
+.reward:hover{
+  opacity: 0.5;
+}
+.image-box{
+  overflow-y: scroll;
+}
+body{
+  background-color: #000;
+}
+
+@media screen and (max-width: 1100) {
+  .image-box{
+  padding: 0 30%;
+
+}
+
+}
+.image-box{
+  position: relative;
+  padding: 0 20%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  top: 10vh;
+}
+.nav{
+  position: fixed;
+  height: 50px;
+  z-index: 99;
+  width: 100%;
+  /* background-color: #fac106; */
+}
+</style>

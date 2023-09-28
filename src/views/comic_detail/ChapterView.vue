@@ -1,72 +1,63 @@
 <template>
-    <div class="back">
-        <div style="width: 0px;" class="box">
-            <h1 class="title">{{ title }}</h1>
+    <div class="image-container clearfix">
+        <div class="image-wrapper">
+            <img 
+              :src="imageSource"
+              alt="preview"
+              class="preview-image"
+            />
         </div>
-        <div class="list-box">
-            <div class="list-item" v-for="(chapter,index) in list" :key="chapter.id">
-                {{ index+1 }}. {{ chapter.title }}
-            </div>
-         
+        <div class="text-wrapper">
+            <img :src="image" alt="">
+            <p class="chapter-name">{{ index+1}}. {{ chapterName }}</p>
         </div>
     </div>
 </template>
 
 <script>
 export default {
+    name: 'ImagePreview',
     props: {
-        title: {
-            type: String,
-            default: "Chapters"
-        },
-        list: Array
-        
+      index: Number,
+      image:require("../../assets/avatars/avatar_1.png"),
+      chapterName: String,
+    },
+
+    data(){
+        return {
+            imageSource: require("../../assets/chapter-cover/Devil-Contract/1.jpg"),
+        }
     }
-}
+};
 </script>
 
 <style scoped>
-.back {
-    width: 1000px;
-    height: 40vh;
-    background-color: rgba(59, 59, 59, 1);
-    position: relative;
-    top: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+
+.image-container {
+    display: flex; /* 使用flexbox布局 */
+    align-items: center; /* 垂直居中对齐 */
+    margin: 10px; /* 顶部和底部外边距，调整整体布局位置 */
 }
 
-.title {
-    color: #fff;
-    font-size: 20px;
-    font-weight: bold;
+.image-wrapper {
+    margin-left: -80px;
+    text-align: left; /* 图片左对齐 */
+    
+}
+.text-wrapper {
+    flex: 1; /* 文本区域占据剩余空间 */
+    text-align: center; /*文本左对齐 */
+    margin-left: 10px; /* 图片和文本之间的间距 */
 }
 
-.list-box {
-    width: 100%;
-    height: 10vh;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content:left;
-    margin-top: 20px;
-    margin-left: 10px;
+.preview-image {
+    max-width: 70px; /* 图像宽度最大为容器宽度 */
+    height: 35px; 
+    border-radius: 5px;
 }
 
-.list-item {
-    width: 30%; /* 每一行显示3个项目 */
-    margin-bottom: 20px; /* 添加间隔 */
-    margin-left:20px;
-    border-radius: 10px;
-    height: 42px;
-    text-align: center;
-    background-color: rgba(0, 0, 0, 1);
-    color: rgba(249, 167, 32, 1);
-    display: flex;
-    justify-content: center;
-    align-items: center; /* 实现竖向居中 */
-}
-.list-item:hover{
-    opacity: 0.6;
+.chapter-name {
+    margin-top: 0px;
+    font-size: 18px;
 }
 </style>

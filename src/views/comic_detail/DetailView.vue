@@ -15,12 +15,24 @@
 
     <div class="app-main">
       <div class="app-box">
-        
+
         <hand-view :info="info"></hand-view>
-        
+
       </div>
       <section class="section-box app-box-bt">
-        <chapter-view :list="chapters"></chapter-view>
+
+        <div class="back">
+          <div class="list-box">
+            <div style="width: 0px;" class="box">
+              <h1 class="title">Chapters</h1>
+            </div>
+            <div class="list-item" v-for="(chapter, index) in chapters" :key="index">
+              <router-link :to="'/Comics?id='"> <chapter-view :chapterName="chapter.name" :index="index"
+                  :src="chapter.src"></chapter-view>
+              </router-link>
+            </div>
+          </div>
+        </div>
         <popular-view class="pop-right" style="width: 450px" :list="rightList"></popular-view>
       </section>
     </div>
@@ -37,21 +49,30 @@ export default {
   components: { MainView, HandView, ChapterView, PopularView },
   data() {
     return {
-      chapters: [],
+      chapters: [
+        {
+          src: require("../../assets/chapter-cover/Devil-Contract/1.jpg"),
+          name: "test",
+        },
+        {
+          src: require("../../assets/chapter-cover/Devil-Contract/1.jpg"),
+          name: "tesr1"
+        }
+      ],
       info: {},
       rightList: {},
-      comicID:0,
+      comicID: 0,
     };
   },
   created() {
-    this.chapters = this.$route.query.comicChap;
+    // this.chapters = this.$route.query.comicChap;
     // this.info = this.$route.query.info;
     // this.rightList = this.$route.query.info.popular;
-    this.comicID = this.$route.query.comicID;
-    this.getDetail(this.comicID);
+    // this.comicID = this.$route.query.comicID;
+    // this.getDetail(this.comicID);
   },
-  methods:{
-    getDetail(ID){
+  methods: {
+    getDetail(ID) {
       var that = this;
       var URL = "http://10.1.1.55:8080/home/" + this.comicID;
       axios.get(URL).then(
@@ -71,19 +92,21 @@ export default {
 </script>
 
 <style scoped>
-.pop-right{
+.pop-right {
   position: relative;
   border-left: solid 3px #000;
   margin-left: 2rem;
   padding-left: 40px;
   /* background-color: #fff; */
 }
-.section-box{
-    
+
+.section-box {
+
   background-color: rgba(59, 59, 59, 1);
 
 }
-.app-box{
+
+.app-box {
   margin: 20px auto;
   display: flex;
   flex-direction: row;
@@ -104,4 +127,45 @@ export default {
   background-color: rgba(59, 59, 59, 1);
 }
 
+.back {
+  width: 1000px;
+  height: 40vh;
+  background-color: rgba(59, 59, 59, 1);
+  position: relative;
+  top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.list-box {
+  width: 100%;
+  height: 10vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
+.list-item {
+  width: 30%;
+  /* 每一行显示3个项目 */
+  margin-bottom: 20px;
+  /* 添加间隔 */
+  margin-left: 20px;
+  border-radius: 10px;
+  height: 42px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 1);
+  color: rgba(249, 167, 32, 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* 实现竖向居中 */
+}
+
+.list-item:hover {
+  opacity: 0.6;
+}
 </style>
