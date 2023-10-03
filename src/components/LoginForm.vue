@@ -1,11 +1,11 @@
 <template>
   <div>
     <el-form :model="loginForm " status-icon :rules="rules" @submit.native.prevent="login" ref="loginForm">
-      <el-form-item label="Email" prop="username" :required="false">
-        <el-input
+      <el-form-item label="Email" prop="email" :required="false">
+        <el-input type="text"
           placeholder="Email"
           prefix-icon="el-icon-message"
-          v-model="loginForm.username"
+          v-model="loginForm.email"
           autocomplete="off"
         ></el-input>
       </el-form-item>
@@ -31,11 +31,11 @@ export default {
   data() {
     return {
       loginForm: {
-        username: '',
+        email: '',
         password: ''
       },
       rules: {
-        username: [
+        email: [
           { required: true, message: 'Please enter Email', trigger: 'blur' },
           { type: 'email', message: 'Please enter a valid Email address', trigger: ['blur', 'change'] }
         ],
@@ -52,24 +52,54 @@ export default {
           type: 'success'
         });
       },
+    error1(){
+      this.$message({
+          message: 'Account does not exist',
+          type: 'error'
+        });
+    },
+    error2(){
+        this.$message({
+          message: 'wrong password',
+          type: 'error'
+        });
+    },
     login() {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          //this.axios.post('https://locallost:8080',this.loginForm).then((resp)=>{
-            //let data=resp.data;
-            //if(data.success){
-              //this.loginForm={};
-              //this.open2();
-            //}
-          //});
+          this.axios.post('http://localhost:8081/user/login',this.loginForm, {
+            headers:{
+              'Content-Type':'application/json'
+            }
+          }).then((resp)=>{
+            let data=resp.data;
+            if(data.success){
+              this.loginForm={};
+              this.open2();
+              localStorage.setItem('access-user',JSON.stringify(data));
+              this.$emit('loginSuccess');
+
+            }
+          }).catch(error => {
+            if (error.response && error.response.status === 401) {
+              if(error.response.data == "Email"){
+                // 处理账号不存在的情况
+                this.error1();
+              }
+              if(error.response.data == "Password"){
+                this.error2();  
+              }
+
+            }
+        });
           //alert('sumbit!');
-          // login logic, send request to the backend
-          this.open2();
-          console.log('Login');
-          console.log('Username：', this.loginForm.username);
-          console.log('Password：', this.loginForm.password);
-          // login event success, close modal
-          this.$emit('loginSuccess');
+          //login logic, send request to the backend
+          //this.open2();
+          //console.log('Login');
+          //console.log('Username：', this.loginForm.email);
+          //console.log('Password：', this.loginForm.password);
+          //// login event success, close modal
+
         }else{
           console.log('error submit!!');
           return false;
