@@ -4,7 +4,7 @@
       <img @click="goBack" src="../../assets/back.png"  style="background-color: #ffe100; width: 50px; float: left;border-radius: 50%;" alt="">
     </div>
    <div class="image-box">
-    <img class="image" v-for="i in list" style="" :src="i.image" alt="">
+    <img class="image" v-for="i,index in pages" :key="index" :src="'http://10.1.1.55:8080/static/comics/Xero:TheKingofTheives/Episode2/'+ i.imgPath" alt="">
     <button class="reward">TIP CREATOR</button>
    </div>
   </div>
@@ -13,6 +13,7 @@
 <script>
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
+import axios from 'axios';
 
 export default {
   name: 'HomeView',
@@ -28,13 +29,31 @@ export default {
       {
         image:require("../../assets/7191c5f60e834caab080dc4925dc3a5.jpg"),
         pageNum:1
-      }]
+      }],
+      pages:[],
     }
+  },
+  created() {
+    this.getPages();
   },
   methods:{
     goBack() {
       this.$router.go(-1); // 返回上一页
     },
+    getPages: function () {
+      var that = this;
+      // 10.1.1.55:8080
+      axios.get("http://10.1.1.55:8080/chapter/34").then(
+        function (response) {
+          console.log(response);
+          that.pages = response.data.pages;
+          console.log("success");
+        },
+        function (err) {
+          console.log(err);
+        }
+      );
+    }
   }
 }
 </script>

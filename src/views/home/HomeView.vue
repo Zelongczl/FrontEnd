@@ -123,7 +123,7 @@
         >
       </div>
 
-      <div class="comic-tabs" v-for="tab in Covers" :key="tab.id">
+      <div class="comic-tabs" v-for="tab in sortedCovers" :key="tab.id">
         <tab-view
           :comicsName="tab.title"
           :coverImg="tab.portraitImagePath"
@@ -673,14 +673,14 @@ export default {
   computed: {
     sortedCovers() {
       if (this.sortOrder === "ALL") {
-        return this.Covers.slice();
+        return this.ResponseData.slice();
       } else if (this.sortOrder === "Newest") {
-        return this.Covers.slice().reverse();
+        return this.ResponseData.slice().reverse();
       } else if (this.sortOrder === "OnGoing") {
         let res = [];
-        let cur = this.Covers;
+        let cur = this.ResponseData;
         cur.forEach((element) => {
-          if (element.Status == "ongoing") {
+          if (element.status == 0) {
             res.push(element);
           }
         });
@@ -688,16 +688,15 @@ export default {
         return res;
       } else if (this.sortOrder === "Complete") {
         let res = [];
-        let cur = this.Covers;
+        let cur = this.ResponseData;
         cur.forEach((element) => {
-          if (element.Status == "complete") {
+          if (element.status === 1) {
             res.push(element);
           }
         });
 
         return res;
       }
-      return this.Covers;
     },
   },
 };
@@ -719,10 +718,24 @@ body {
   cursor: pointer;
 }
 .lottie {
-  position: absolute;
-  left: 1185px;
-  top: 92px;
+  position: relative;
+  left: 473px;
+  top:-357px;
   z-index: 5;
+  margin-top: -50px;
+}
+.circle {
+  width: 52px;
+  height: 52px;
+  position: relative;
+  left: 960px;
+  top: -357px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 100%;
+  margin-top: -52px;
+}
+.lottie:hover {
+  cursor: pointer;
 }
 .modal {
   position: fixed;
@@ -835,18 +848,6 @@ body {
   position: relative;
   size: 10px;
   background-color: transparent;
-  cursor: pointer;
-}
-.circle {
-  width: 52px;
-  height: 52px;
-  position: absolute;
-  left: 1185px;
-  top: 90px;
-  background-color: rgba(0, 0, 0, 0.7);
-  border-radius: 100%;
-}
-.lottie:hover {
   cursor: pointer;
 }
 

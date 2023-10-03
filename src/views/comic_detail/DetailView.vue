@@ -27,7 +27,8 @@
               <h1 class="title">Chapters</h1>
             </div>
             <div class="list-item" v-for="(chapter, index) in chapters" :key="index">
-              <router-link :to="'/Comics?id='"> <chapter-view :chapterName="chapter.name" :index="index"
+              <router-link :to="'reader'"> 
+              <chapter-view :chapterName="chapter.name" :index="index"
                   :src="chapter.src"></chapter-view>
               </router-link>
             </div>
@@ -65,11 +66,11 @@ export default {
     };
   },
   created() {
-    // this.chapters = this.$route.query.comicChap;
-    // this.info = this.$route.query.info;
-    // this.rightList = this.$route.query.info.popular;
-    // this.comicID = this.$route.query.comicID;
-    // this.getDetail(this.comicID);
+    this.chapters = this.$route.query.comicChap;
+    this.info = this.$route.query.info;
+    this.rightList = this.$route.query.info.popular;
+    this.comicID = this.$route.query.comicID;
+    this.getDetail(this.comicID);
   },
   methods: {
     getDetail(ID) {

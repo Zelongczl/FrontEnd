@@ -12,7 +12,7 @@
         <div class="nav-bar">
           <ul class="clearfix">
             <li>
-              <router-link to="/home">
+              <router-link to="/">
                 <span>Home</span>
               </router-link>
             </li>

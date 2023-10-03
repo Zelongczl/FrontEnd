@@ -6,7 +6,7 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/home',
+    path: '',
     name: 'home',
     component: HomeView
   },
@@ -31,29 +31,31 @@ const routes = [
     component: () => import('../views/comic_detail/DetailView.vue')
   },
   {
-    path: '/Comics',
-    name: 'Comics',
+    path: '/reader',
+    name: 'reader',
     component: () => import('../views/comic_detail/Comics.vue')
   }
 ]
 
 const router = new VueRouter({
+  mode:'history',
+  base: process.env.Base_URL,
   routes,
-  scrollBehavior(to, from, savedPosition) {
-    if (savedPosition) {
-      return savedPosition;
-    } else {
-      return { x: 0, y: 0 };
-    }
-  }
+  // scrollBehavior(to, from, savedPosition) {
+  //   if (savedPosition) {
+  //     return savedPosition;
+  //   } else {
+  //     return { x: 0, y: 0 };
+  //   }
+  // }
 });
 
-router.beforeEach((to, from, next) => {
-  if (to.path === '/') {
-    next('/home');
-  } else {
-    next(); 
-  }
-});
+// router.beforeEach((to, from, next) => {
+//   if (to.path === '/') {
+//     next('/home');
+//   } else {
+//     next(); 
+//   }
+// });
 
 export default router
