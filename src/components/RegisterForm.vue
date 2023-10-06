@@ -26,10 +26,8 @@
       <el-col :span="5">
 <!-- Send CAPTCHA button -->
 <div class="button-position">
-    <button class="el-button el-button--primary el-button--medium" :class="{ 'is-disabled': showCountdown }" type="button" @click="sendVerificationCode">
-      <span v-if="showCountdown">{{ countdown }}s</span>
-      <span v-else>Send</span>
-    </button>
+      <el-button v-if="!showCountdown" type="warning" @click="sendVerificationCode">Send</el-button>
+      <el-button v-else disabled><i class="el-icon-loading"></i>{{ countdown }}s</el-button>
   </div>
       </el-col>
       </el-row>
@@ -219,54 +217,6 @@ export default {
   cursor: pointer;
   transition: background-color 0.3s ease; 
 }
-.el-button {
-  display: inline-block;
-  padding: 12px 19px; /* 调整按钮大小 */
-  font-size: 15px; /* 调整按钮字体大小 */
-  border-radius: 4px; /* 调整按钮边框圆角 */
-  text-align: center;
-  white-space: nowrap;
-  cursor: pointer;
-  user-select: none;
-  transition: .1s;
-  outline: none;
-  border: 1px solid #dcdfe6;
-  background-color: #ffffff;
-  color: #606266;
-  border-color: #dcdfe6;
-}
-
-.el-button.el-button--primary {
-  background-color: #F9A51C;
-  color: black;
-  border-color: #F9A51C;
-}
-
-.el-button.is-disabled {
-  background-color: #f5f7fa;
-  color: #c0c4cc;
-  border-color: #dcdfe6;
-  cursor: not-allowed;
-}
-
-.el-button span {
-  display: inline-block;
-  vertical-align: middle;
-  margin-left: 5px;
-}
-
-.el-button i.el-icon-loading {
-  margin-right: 4px;
-  vertical-align: middle;
-}
-
-/* 按钮 hover 效果 */
-.el-button:hover {
-  background-color: #F9A51C;
-  color: #ffffff;
-  border-color: #F9A51C;
-}
-
 .el-form {
   padding-top: 30px;
 }

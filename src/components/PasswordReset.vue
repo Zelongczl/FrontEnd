@@ -13,7 +13,7 @@
       <el-col :span="5">
 <!-- send button -->
 <el-form-item>
-        <el-button v-if="!showCountdown" type="primary" @click="sendVerificationCode">Send</el-button>
+        <el-button v-if="!showCountdown" type="warning" @click="sendVerificationCode">Send</el-button>
         <el-button v-else disabled><i class="el-icon-loading"></i>{{ countdown }}s</el-button>
       </el-form-item>
       </el-col>
