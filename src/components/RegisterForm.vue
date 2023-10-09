@@ -143,9 +143,9 @@ export default {
 }
 .el-button {
   display: inline-block;
-  padding: 12px 19px; /* 调整按钮大小 */
-  font-size: 15px; /* 调整按钮字体大小 */
-  border-radius: 4px; /* 调整按钮边框圆角 */
+  padding: 12px 19px; 
+  font-size: 15px; 
+  border-radius: 4px;
   text-align: center;
   white-space: nowrap;
   cursor: pointer;
@@ -182,7 +182,7 @@ export default {
   vertical-align: middle;
 }
 
-/* 按钮 hover 效果 */
+/* hover effect */
 .el-button:hover {
   background-color: #F9A51C;
   color: #ffffff;

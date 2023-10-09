@@ -38,7 +38,7 @@ export default {
   },
   methods:{
     goBack() {
-      this.$router.go(-1); // 返回上一页
+      this.$router.go(-1); // go back to prev page
     },
     getPages: function () {
       var that = this;

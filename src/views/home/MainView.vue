@@ -1,14 +1,14 @@
 <template>
   <div class="for-sticky-only">
     <div class="topbar">
-      <!-- 版心 -->
+      <!-- container -->
       <div class="container clearfix">
-        <!-- 左侧LOGO -->
+        <!-- LHS LOGO -->
         <div class="logo leftfix">
           <img src="../../assets/shrine_logo.png" alt="ShrineLogo" />
         </div>
 
-        <!-- 左侧导航区 -->
+        <!-- LHS Navigation Area -->
         <div class="nav-bar">
           <ul class="clearfix">
             <li>
@@ -34,26 +34,26 @@
           </ul>
         </div>
 
-        <!-- 右侧用户信息 -->
+        <!-- RHS User Infomation -->
         <div class="user-info clearfix">
-          <!-- 用户头像 -->
+          <!-- User Avatar -->
           <div class="cur-avatar">
             <img src="../../assets/avatars/avatar_1.png" alt="cur_avatar" />
           </div>
 
-          <!-- 用户信息 -->
+          <!-- User info -->
           <div class="info">
-            <!-- 用户名&绿三角 -->
+            <!-- Username -->
             <div class="username">
               <div class="name">
-                <span>nouser</span>
+                <span>{{username}}</span>
               </div>
-              <div class="tri">
+              <!-- <div class="tri">
                 <img src="../../assets/icons/triangle_icon.png" alt="unknown" />
-              </div>
+              </div> -->
             </div>
 
-            <!-- 经验条和里面的字儿 -->
+            <!-- Exp Bar -->
             <div class="exp-bar">
               <el-progress
                 :show-text="false"
@@ -78,7 +78,16 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
+  data(){
+    return {
+      username: "user0001",
+    }
+  },
+  methods: {
+  
+  }
 };
 </script>
     
@@ -99,7 +108,7 @@ export default {
   /* #262626 */
 }
 
-/* #region 左侧logo */
+/* #region LHS logo */
 .topbar .logo {
   margin-top: 10px;
 }
@@ -108,9 +117,9 @@ export default {
   height: 60px;
 }
 
-/* #endregion 左侧logo end */
+/* #endregion LHS logo end */
 
-/* #region 左侧导航区 */
+/* #region LHS Navigation Area */
 .topbar .nav-bar {
   height: 80px;
   float: left;
@@ -139,11 +148,11 @@ export default {
   font-size: 16px;
 }
 
-/* #endregion 左侧导航区 end */
+/* #endregion LHS Navigation Area end */
 
-/* #region 右侧用户信息 */
+/* #region RHS User Info */
 
-/* #region 用户名和绿三角 */
+/* #region Username */
 .topbar .user-info {
   display: flex;
   width: 170px;
@@ -175,7 +184,7 @@ export default {
   color: #eee;
   /* vertical-align: text-bottom; */
 }
-.topbar .info .username .tri {
+/* .topbar .info .username .tri {
   display: inline-block;
   vertical-align: text-bottom;
   margin-left: 2px;
@@ -184,10 +193,10 @@ export default {
   height: 16px;
   width: 16px;
   filter: brightness(1.8);
-}
-/* #endregion 用户名和绿三角end */
+} */
+/* #endregion Username end */
 
-/* #region 经验条 */
+/* #region Exp Bar */
 .topbar .exp-bar {
   margin-top: 8px;
   margin-right: 2px;
@@ -200,12 +209,11 @@ export default {
   left: 20%;
   font-weight: bold;
 }
-/* #endregion 经验条 */
+/* #endregion Exp Bar end */
 
-/* #endregion 右侧用户信息 end */
+/* #endregion RHS User Info end */
 
-/* #region 清楚样式 */
-/* 基础设置 */
+/* #region Clear Default Style */
 .container {
     width: 1024px;
     margin: 0 auto;
@@ -220,8 +228,7 @@ ul,ol {
 }
 
 img {
-    /* 底部留白 */
-    display: block;
+  display: block;
 	border:0;
 }
 
@@ -230,26 +237,21 @@ b,strong {
 }
 
 h1,h2,h3,h4,h5,h6 {
-    /* 父元素字号的百分比 */
     font-size: 100%;
     font-weight: normal;
 }
 
 i,em {
-    /* 不倾斜 */
     font-style: normal;
 }
 
 u,ins,s,del {
-    /* 去掉中划线和下划线 */
     text-decoration: none;
 }
 
 table {
     border: 1px solid #999;
-    /* 相当于是cellspacing */
     border-spacing: 0;
-    /* 1px边框 */
     border-collapse: collapse;
 }
 
@@ -258,12 +260,10 @@ td,th {
 }
 
 input,button {
-    /* 去掉轮廓线 */
     outline: none;
     border:none;
 }
 
-/* 风格设置 */
 body {
     font: 12px/1.5 "Microsoft YaHei", Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;
     color: #333;
@@ -292,5 +292,5 @@ a:hover {
     display: block;
     clear: both;
 }
-/* #endregion 清楚样式 */
+/* #endregion Clear Default Style */
 </style>

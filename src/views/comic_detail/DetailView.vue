@@ -2,10 +2,10 @@
   <div>
     <main-view></main-view>
     <!-- <p style="font-weight: bold; font-size: 50px; color: #eeeeee">
-      这是 {{ $route.query.comicname }} 的Detail
+      {{ $route.query.comicname }}
     </p>
     <p style="font-weight: bold; font-size: 20px; color: #eeeeee">
-      介绍 {{ $route.query.comicDef }} 的Detail
+      {{ $route.query.comicDef }} 
     </p>
     <div v-for="(chapter, index) in chapters" :key="index">
       <p style="font-weight: bold; font-size: 20px; color: #eeeeee">
@@ -113,7 +113,6 @@ export default {
   flex-direction: row;
   height: 45vh;
   width: 1024px;
-  /* 居中 */
   background-color: rgba(59, 59, 59, 1);
 }
 
@@ -124,7 +123,6 @@ export default {
   flex-direction: row;
   height: 70vh;
   width: 1024px;
-  /* 居中 */
   background-color: rgba(59, 59, 59, 1);
 }
 
@@ -151,9 +149,9 @@ export default {
 
 .list-item {
   width: 30%;
-  /* 每一行显示3个项目 */
+  /* show 3 items in a line */
   margin-bottom: 20px;
-  /* 添加间隔 */
+  /* creat interval */
   margin-left: 20px;
   border-radius: 10px;
   height: 42px;
@@ -163,7 +161,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* 实现竖向居中 */
+  /* Vertical Centring */
 }
 
 .list-item:hover {

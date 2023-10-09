@@ -8,13 +8,23 @@
       </div>
 
       <div class="lottie">
-        <div class="lottie-structure" @click="showModal = true">
+        <div class="lottie-structure" @click="getSubWindow">
           <lottie
           :options="defaultOptions"
           :height="50"
           :width="50"
           v-on:animCreated="handleAnimation"
         ></lottie>
+        </div>
+        <div v-if="showPanel" class="panel">
+          <div class="panel-content">
+            <button class="close-button" @click="closePanelAndReset">
+            <div class="button-container">
+             <img src="../../assets/cross.png" alt="Your Image" />
+            </div>
+          </button>
+            <button class="logout" @click="Logout">LOGOUT</button>
+          </div>
         </div>
         <div v-if="showModal" class="modal" @click="closeModalOutside">
         <!-- Modal content -->
@@ -37,7 +47,7 @@
 
         <!-- Login and Registration Components -->
         <div v-if="activeTab === 'login'">
-          <LoginForm @loginSuccess="closeModal" />
+          <LoginForm @update-parent-data="updateToken" @loginSuccess="closeModal" />
         </div>
         <div v-else-if="activeTab === 'passwordReset'">
           <FormData @resetSuccess="switchTab('login')" />
@@ -172,7 +182,9 @@ export default {
   components: { MainView, TabView, lottie: Lottie, LoginForm, RegisterForm,FormData},
   data() {
     return {
+      Token: null,
       showModal:false,
+      showPanel:false,
       activeTab:"login",
       mainImg: require("../../assets/main_exh/169081158264c7bcbe3cf55408.jpg"),
       carouselLeft: [
@@ -647,6 +659,10 @@ export default {
       this.showModal = false;
       this.activeTab = 'login';
     },
+    closePanelAndReset() {
+      // Close the pop-up and reset the data
+      this.showPanel = false;
+    },
     sortBy(order) {
       if (this.sortOrder !== order) {
         this.sortOrder = order;
@@ -669,6 +685,29 @@ export default {
         }
       );
     },
+    getSubWindow() {
+      if(this.Token === null) {
+        this.showModal = true;
+      }else {
+        this.showPanel = true;
+      }
+    },
+    Logout() {
+      this.Token = null;
+      axios.get("http://10.1.1.55:8080/logout").then(
+        function (response) {
+          console.log(response);
+          console.log("successfully logout");
+        },
+        function (err) {
+          console.log(err);
+        }
+      );
+      this.showPanel = false;
+    },
+    updateToken(newData) {
+      this.Token = newData;
+    }
   },
   computed: {
     sortedCovers() {
@@ -706,7 +745,7 @@ export default {
 body {
   background-color: black;
 }
-
+/* #region main exhibition area */
 .main-img {
   margin-top: 4px;
   margin-bottom: 4px;
@@ -738,6 +777,17 @@ body {
   cursor: pointer;
 }
 .modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  cursor: default;
+  backdrop-filter: blur(2px);
+}
+.panel {
   position: fixed;
   top: 0;
   left: 0;
@@ -844,16 +894,38 @@ body {
   border-radius: 10px;
   backdrop-filter: none;
 }
+.panel-content {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: black;
+  padding: 30px;
+  padding-bottom: 40px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  border-radius: 10px;
+  backdrop-filter: none;
+}
 .back-button {
   position: relative;
   size: 10px;
   background-color: transparent;
   cursor: pointer;
 }
+.logout {
+  margin-top: 45px;
+  height: 40px;
+  width: 150px;
+  border-radius: 10px;
+  background-color: #F9A51C;
+  font-weight: bold;
+  cursor: pointer;
+}
 
-/* #endregion 主展览图 */
+/* #endregion main exhibition area */
 
-/* #region 走马灯 */
+/* #region carousel area */
 .carousel {
   width: 1030px;
   height: 118px;
@@ -880,9 +952,9 @@ body {
 .el-carousel__item:nth-child(n) {
   background-color: black;
 }
-/* #endregion 走马灯 */
+/* #endregion carousel area */
 
-/* #region 主页筛选条 */
+/* #region filter bar */
 .filter-pop-new {
   height: 70px;
   position: relative;
@@ -933,15 +1005,15 @@ body {
 .filter-pop-new .complete:hover {
   cursor: pointer;
 }
-/* #endregion 主页筛选条 */
+/* #endregion filter bar */
 
-/* #region 漫画选项卡 */
+/* #region comic tab */
 .comic-tabs {
   white-space: nowrap;
   display: inline-block;
   margin: 1px 3px;
 }
-/* #endregion 漫画选项卡 */
+/* #endregion comic tab */
 
 .floating {
   position: fixed;

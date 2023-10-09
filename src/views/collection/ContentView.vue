@@ -26,7 +26,7 @@
     </div>
     <div class="content">
       <div class="moving" :style="position">
-        <!-- 头像界面 -->
+        <!-- avatar interface -->
         <div class="avatar-page">
           <div v-if="Token === null" class="msg">
             <span>Login First to see your avatar !</span>
@@ -49,7 +49,7 @@
           </div>
         </div>
 
-        <!-- 贴纸界面 -->
+        <!-- sticker interface -->
         <div class="sticker-page">
           <div v-if="Token === null" class="msg">
             <span>Login First to see your avatar !</span>
@@ -76,7 +76,7 @@
           </div>
         </div>
 
-        <!-- 成就界面 -->
+        <!-- achievement interface -->
         <div class="achievement-page">
           <div v-if="Token === null" class="msg">
             <span>Login First to see your achievement !</span>

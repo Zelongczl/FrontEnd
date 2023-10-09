@@ -34,24 +34,24 @@ export default {
 <style scoped>
 
 .image-container {
-    display: flex; /* 使用flexbox布局 */
-    align-items: center; /* 垂直居中对齐 */
-    margin: 10px; /* 顶部和底部外边距，调整整体布局位置 */
+    display: flex;
+    align-items: center; 
+    margin: 10px; 
 }
 
 .image-wrapper {
     margin-left: -80px;
-    text-align: left; /* 图片左对齐 */
+    text-align: left;
     
 }
 .text-wrapper {
-    flex: 1; /* 文本区域占据剩余空间 */
-    text-align: center; /*文本左对齐 */
-    margin-left: 10px; /* 图片和文本之间的间距 */
+    flex: 1; 
+    text-align: center; 
+    margin-left: 10px; 
 }
 
 .preview-image {
-    max-width: 70px; /* 图像宽度最大为容器宽度 */
+    max-width: 70px; 
     height: 35px; 
     border-radius: 5px;
 }
