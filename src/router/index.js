@@ -50,6 +50,10 @@ const router = new VueRouter({
   // }
 });
 
+router.afterEach(() => {
+  window.scrollTo(0,0);
+})
+
 // router.beforeEach((to, from, next) => {
 //   if (to.path === '/') {
 //     next('/home');

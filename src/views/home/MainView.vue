@@ -82,7 +82,7 @@ import axios from "axios";
 export default {
   data(){
     return {
-      username: "user0001",
+      username: "Jin Cham Yuan Wai",
     }
   },
   methods: {
@@ -172,17 +172,31 @@ export default {
   margin-left: 10px;
 }
 .topbar .info .username {
-  margin-left: 20px;
+  margin-left: 0px;
   font-size: 16px;
   height: 16px;
 }
 
 .topbar .info .username .name {
-  display: inline-block;
+  display: flex;
+  width: 106px;
   height: 16px;
-  line-height: 16px;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
   color: #eee;
+  
   /* vertical-align: text-bottom; */
+}
+
+.topbar .info .username .name span{
+  flex: 1;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 16px;
+  transition: font-size 0.5s;
 }
 /* .topbar .info .username .tri {
   display: inline-block;
