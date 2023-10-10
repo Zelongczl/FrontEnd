@@ -34,24 +34,24 @@ export default {
 <style scoped>
 
 .image-container {
-    display: flex;
-    align-items: center; 
-    margin: 10px; 
+    display: flex; /* Use flexbox layout */
+    align-items: center; /* vertical center alignment */
+    margin: 10px; /* Top and bottom margins, adjust overall layout position */
 }
 
 .image-wrapper {
     margin-left: -80px;
-    text-align: left;
+    text-align: left; /* Picture left aligned */
     
 }
 .text-wrapper {
-    flex: 1; 
-    text-align: center; 
-    margin-left: 10px; 
+    flex: 1; /* The text area takes up the remaining space */
+    text-align: center; /* Text left aligned */
+    margin-left: 10px; /* spacing between image and text */
 }
 
 .preview-image {
-    max-width: 70px; 
+    max-width: 70px; /* The image width is at most the container width */
     height: 35px; 
     border-radius: 5px;
 }
