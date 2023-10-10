@@ -4,7 +4,7 @@ module.exports = defineConfig({
   // ,devServer: {
   //   port:7000
   // }
-  // 设置的端口号不要1024以内
+  // The port number set should not be within 1024
 })
 
 module.exports = {

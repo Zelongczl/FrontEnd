@@ -29,7 +29,7 @@ export default{
             default:()=>{
                 return{
                     img:"https://th.bing.com/th/id/OIP.i8KczwUEv1MMC-hWUteWxwHaFj?pid=ImgDet&rs=1",
-                    Name:"标题",
+                    Name:"title",
                     author:"xxxxasdasd",
                     description:'asdijasdjkaskldjkaskdjlasdjl;lllsdlalkdslkasdkkladsklaldwklwkllkdwkl;alkwdmlmasdasdjadjhkwhjkd,am,w'
                 }

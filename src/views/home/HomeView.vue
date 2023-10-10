@@ -201,7 +201,7 @@ export default {
       ],
       sortOrder: "ALL",
       Covers: [
-        // 第一行
+        // first row
         {
           id: "0001",
           Name: "Fallen Angel",
@@ -339,7 +339,7 @@ export default {
           Status: "ongoing",
         },
 
-        // 第二行
+        // second row
         {
           id: "0005",
           Name: "Mutton Chop!",
@@ -502,7 +502,7 @@ export default {
           Status: "complete",
         },
 
-        // 第三行
+        // third row
         {
           id: "0009",
           Name: "Devil's Contract",
@@ -542,7 +542,7 @@ export default {
           Status: "complete",
         },
 
-        // 第四行
+        // fourth row
         {
           id: "0013",
           Name: "Element",
@@ -579,7 +579,7 @@ export default {
           Status: "ongoing",
         },
 
-        // 第五行
+        // fifth row
         {
           id: "0017",
           Name: "Hammer Head",
@@ -617,7 +617,7 @@ export default {
           Status: "ongoing",
         },
 
-        // 第六行
+        // sixth row
         {
           id: "0021",
           Name: "High School Romance",

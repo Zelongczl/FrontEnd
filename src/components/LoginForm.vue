@@ -83,7 +83,7 @@ export default {
           }).catch(error => {
             if (error.response && error.response.status === 401) {
               if(error.response.data == "Email"){
-                // 处理账号不存在的情况
+                // Handle the situation where the account does not exist
                 this.error1();
               }
               if(error.response.data == "Password"){

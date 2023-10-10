@@ -113,6 +113,7 @@ export default {
   flex-direction: row;
   height: 45vh;
   width: 1024px;
+  /* center */
   background-color: rgba(59, 59, 59, 1);
 }
 
@@ -123,6 +124,7 @@ export default {
   flex-direction: row;
   height: 70vh;
   width: 1024px;
+  /* center */
   background-color: rgba(59, 59, 59, 1);
 }
 
