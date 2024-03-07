@@ -129,7 +129,7 @@ export default {
             }, 1000);
 
             console.log('Sending verification code...');
-            this.axios.post('http://localhost:8081/user/send-verification',this.registerForm, {
+            this.axios.post('http://localhost:9090/user/send-verification',this.registerForm, {
                 headers:{
                   'Content-Type':'application/json'
                 }
@@ -163,7 +163,7 @@ export default {
           console.log('Username：', this.registerForm.name);
           console.log('Password：', this.registerForm.password);
           
-          this.axios.post('http://localhost:8081/user/register',this.registerForm, {
+          this.axios.post('http://localhost:9090/user/register',this.registerForm, {
                 headers:{
                   'Content-Type':'application/json'
                 }

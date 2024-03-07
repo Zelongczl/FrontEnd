@@ -67,7 +67,7 @@ export default {
     login() {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          this.axios.post('http://localhost:8081/user/login',this.loginForm, {
+          this.axios.post('http://localhost:9090/user/login',this.loginForm, {
             headers:{
               'Content-Type':'application/json'
             }
@@ -77,8 +77,11 @@ export default {
               this.loginForm={};
               this.open2();
               localStorage.setItem('access-user',JSON.stringify(data));
+              console.log('Login');
+              console.log('Username：', this.loginForm.username);
+              console.log('Password：', this.loginForm.password);
               this.$emit('loginSuccess');
-
+              this.$emit('update-parent-data', 11111);
             }
           }).catch(error => {
             if (error.response && error.response.status === 401) {
@@ -94,13 +97,11 @@ export default {
         });
           //alert('sumbit!');
           // login logic, send request to the backend
-          this.open2();
-          console.log('Login');
-          console.log('Username：', this.loginForm.username);
-          console.log('Password：', this.loginForm.password);
+          //this.open2();
+
           // login event success, close modal
-          this.$emit('update-parent-data', 11111);
-          this.$emit('loginSuccess');
+
+          //this.$emit('loginSuccess');
         }else{
           console.log('error submit!!');
           return false;

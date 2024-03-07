@@ -27,7 +27,8 @@ export default {
   },
   computed:{
     URL(){
-        let URL = "http://10.1.1.55:8080" + this.coverImg;
+        let URL = "http://localhost:9090" + this.coverImg;
+        console.log(this.coverImg)
         return URL;
     }
   }

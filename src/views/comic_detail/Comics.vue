@@ -4,7 +4,7 @@
       <img @click="goBack" src="../../assets/back.png"  style="background-color: #ffe100; width: 50px; float: left;border-radius: 50%;" alt="">
     </div>
    <div class="image-box">
-    <img class="image" v-for="i,index in pages" :key="index" :src="'http://10.1.1.55:8080/static/comics/Xero:TheKingofTheives/Episode2/'+ i.imgPath" alt="">
+    <img class="image" v-for="i,index in pages" :key="index" :src="'http://localhost:9090/static/comics/Xero_TheKingofTheives/Episode2/'+ i.imgPath" alt="">
     <button class="reward">TIP CREATOR</button>
    </div>
   </div>
@@ -43,7 +43,7 @@ export default {
     getPages: function () {
       var that = this;
       // 10.1.1.55:8080
-      axios.get("http://10.1.1.55:8080/chapter/34").then(
+      axios.get("http://localhost:9090/chapter/34").then(
         function (response) {
           console.log(response);
           that.pages = response.data.pages;

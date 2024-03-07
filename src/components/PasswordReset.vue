@@ -103,7 +103,7 @@
         this.updateRules();  
         this.$refs.formData.validate((valid) => {
           if (valid) {
-            this.axios.post('http://localhost:8081/user/reset-password',this.formData, {
+            this.axios.post('http://localhost:9090/user/reset-password',this.formData, {
               headers:{
                 'Content-Type':'application/json'
               }
@@ -147,7 +147,7 @@
             }, 1000);
 
             console.log('Sending verification code...');
-            this.axios.post('http://localhost:8081/user/send-reset-password',this.formData, {
+            this.axios.post('http://localhost:9090/user/send-reset-password',this.formData, {
                 headers:{
                   'Content-Type':'application/json'
                 }

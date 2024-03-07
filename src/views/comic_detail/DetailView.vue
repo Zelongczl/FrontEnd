@@ -75,7 +75,7 @@ export default {
   methods: {
     getDetail(ID) {
       var that = this;
-      var URL = "http://10.1.1.55:8080/home/" + this.comicID;
+      var URL = "http://localhost:9090/home/" + this.comicID;
       axios.get(URL).then(
         function (response) {
           console.log(response);

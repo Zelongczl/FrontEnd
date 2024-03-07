@@ -133,7 +133,7 @@
         >
       </div>
 
-      <div class="comic-tabs" v-for="tab in Covers" :key="tab.id">
+      <div class="comic-tabs" v-for="tab in ResponseData" :key="tab.id">
         <tab-view
           :comicsName="tab.title"
           :coverImg="tab.portraitImagePath"
@@ -674,7 +674,7 @@ export default {
     getAll: function () {
       var that = this;
       // 10.1.1.55:8080
-      axios.get("http://10.1.1.55:8080/home").then(
+      axios.get("http://localhost:9090/home").then(
         function (response) {
           console.log(response);
           that.ResponseData = response.data;
@@ -694,7 +694,7 @@ export default {
     },
     Logout() {
       this.Token = null;
-      axios.get("http://10.1.1.55:8080/logout").then(
+      axios.get("http://localhost:9090/logout").then(
         function (response) {
           console.log(response);
           console.log("successfully logout");
