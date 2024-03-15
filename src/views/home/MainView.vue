@@ -65,8 +65,8 @@
               ></el-progress>
               <div class="lv-coin">
                 <span
-                  >LV.0 &nbsp;&nbsp;&nbsp;&nbsp;
-                  <i class="el-icon-orange"></i>&nbsp;&nbsp; 0</span
+                  >LV.{{ level }} &nbsp;&nbsp;&nbsp;&nbsp;
+                  <i class="el-icon-orange"></i>&nbsp;&nbsp; {{ coins }}</span
                 >
               </div>
             </div>
@@ -83,14 +83,31 @@ export default {
   data(){
     return {
       username: "Jin Cham Yuan Wai",
-    }
+      progressPercentage: 0,
+      level: 2,
+      coins: 0,
+    };
+  },
+  mounted() {
+    this.fetchData();
   },
   methods: {
-  
+    async fetchData() {
+      try {
+        const response = await axios.get('/backend-API-endpoint') //Replace '/backend-API-endpoint' with the backend API endpoint
+        const data = response.data;
+        this.progressPercentage = data.progressPercentage; //Assume that the backend returns data 'progressPercentage'
+        this.level = data.level; //Assume the backend returns 'level'
+        this.coins = data.coins; //Assume the backend returns 'coins'
+      } catch (error) {
+        console.error('Failed to fetch data:', error);
+      }
+    }
+
   }
 };
 </script>
-    
+
 <style scoped>
 .for-sticky-only {
   position: sticky;
@@ -185,7 +202,7 @@ export default {
   align-items: center;
   overflow: hidden;
   color: #eee;
-  
+
   /* vertical-align: text-bottom; */
 }
 
