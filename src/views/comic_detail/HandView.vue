@@ -1,7 +1,7 @@
 <template>
     <div class="hand-main">
         <div class="box-left">
-            <img style="width: 350px;margin-top: 28px;margin-left:30px" :src="'http://10.1.1.55:8080' + info.portraitImagePath" alt="">
+            <img style="width: 350px;margin-top: 28px;margin-left:30px" :src="'http://localhost:9090' + info.portraitImagePath" alt="">
         </div>
         <div class="right-box">
             <div class="item">

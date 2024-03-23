@@ -142,6 +142,7 @@
       </div>
 
       <div class="comic-tabs" v-for="tab in ResponseData" :key="tab.id">
+      <div class="comic-tabs" v-for="tab in ResponseData" :key="tab.id">
         <tab-view
           :comicsName="tab.title"
           :coverImg="tab.portraitImagePath"

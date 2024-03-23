@@ -96,8 +96,11 @@ export default {
                 localStorage.setItem("access-user", JSON.stringify(data));
                 localStorage.setItem("Token", JSON.stringify(data.jwt));
                 localStorage.setItem("userId", JSON.stringify(data.userId));
-                console.log(resp);
+                console.log("Login");
+                console.log("Username：", this.loginForm.username);
+                console.log("Password：", this.loginForm.password);
                 this.$emit("loginSuccess");
+                this.$emit("update-parent-data", 11111);
               }
             })
             .catch((error) => {
@@ -113,13 +116,11 @@ export default {
             });
           //alert('sumbit!');
           // login logic, send request to the backend
-          this.open2();
-          console.log("Login");
-          console.log("Username：", this.loginForm.email);
-          console.log("Password：", this.loginForm.password);
+          //this.open2();
+
           // login event success, close modal
-          this.$emit("update-parent-data", 11111);
-          this.$emit("loginSuccess");
+
+          //this.$emit('loginSuccess');
         } else {
           console.log("error submit!!");
           return false;
