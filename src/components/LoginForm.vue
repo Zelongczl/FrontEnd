@@ -1,8 +1,15 @@
 <template>
   <div>
-    <el-form :model="loginForm " status-icon :rules="rules" @submit.native.prevent="login" ref="loginForm">
+    <el-form
+      :model="loginForm"
+      status-icon
+      :rules="rules"
+      @submit.native.prevent="login"
+      ref="loginForm"
+    >
       <el-form-item label="Email" prop="email" :required="false">
-        <el-input type="text"
+        <el-input
+          type="text"
           placeholder="Email"
           prefix-icon="el-icon-message"
           v-model="loginForm.email"
@@ -11,7 +18,7 @@
       </el-form-item>
       <el-form-item label="Password" prop="password">
         <el-input
-        type="password"
+          type="password"
           placeholder="Password"
           prefix-icon="el-icon-key"
           autocomplete="off"
@@ -27,86 +34,98 @@
 </template>
 
 <script>
+import Vue from "vue";
+import VueCookies from "vue-cookies";
+
+Vue.prototype.$cookies = VueCookies;
 export default {
   data() {
     return {
       loginForm: {
-        email: '',
-        password: ''
+        email: "",
+        password: "",
       },
       rules: {
         email: [
-          { required: true, message: 'Please enter Email', trigger: 'blur' },
-          { type: 'email', message: 'Please enter a valid Email address', trigger: ['blur', 'change'] }
+          { required: true, message: "Please enter Email", trigger: "blur" },
+          {
+            type: "email",
+            message: "Please enter a valid Email address",
+            trigger: ["blur", "change"],
+          },
         ],
         password: [
-          { required: true, message: 'Please enter Password', trigger: 'blur' }
-        ]
-      }
+          { required: true, message: "Please enter Password", trigger: "blur" },
+        ],
+      },
     };
   },
   methods: {
     open2() {
-        this.$message({
-          message: 'You have successfully logged in.',
-          type: 'success'
-        });
-      },
-    error1(){
       this.$message({
-          message: 'Account does not exist',
-          type: 'error'
-        });
+        message: "You have successfully logged in.",
+        type: "success",
+      });
     },
-    error2(){
-        this.$message({
-          message: 'wrong password',
-          type: 'error'
-        });
+    error1() {
+      this.$message({
+        message: "Account does not exist",
+        type: "error",
+      });
+    },
+    error2() {
+      this.$message({
+        message: "wrong password",
+        type: "error",
+      });
     },
     login() {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          this.axios.post('http://localhost:8081/user/login',this.loginForm, {
-            headers:{
-              'Content-Type':'application/json'
-            }
-          }).then((resp)=>{
-            let data=resp.data;
-            if(data.success){
-              this.loginForm={};
-              this.open2();
-              localStorage.setItem('access-user',JSON.stringify(data));
-              this.$emit('loginSuccess');
-
-            }
-          }).catch(error => {
-            if (error.response && error.response.status === 401) {
-              if(error.response.data == "Email"){
-                // Handle the situation where the account does not exist
-                this.error1();
+          this.axios
+            .post("/user/login", this.loginForm, {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            })
+            .then((resp) => {
+              let data = resp.data;
+              if (data.success) {
+                this.loginForm = {};
+                this.open2();
+                localStorage.setItem("access-user", JSON.stringify(data));
+                localStorage.setItem("Token", JSON.stringify(data.jwt));
+                localStorage.setItem("userId", JSON.stringify(data.userId));
+                console.log(resp);
+                this.$emit("loginSuccess");
               }
-              if(error.response.data == "Password"){
-                this.error2();  
+            })
+            .catch((error) => {
+              if (error.response && error.response.status === 401) {
+                if (error.response.data == "Email") {
+                  // Handle the situation where the account does not exist
+                  this.error1();
+                }
+                if (error.response.data == "Password") {
+                  this.error2();
+                }
               }
-
-            }
-        });
+            });
           //alert('sumbit!');
           // login logic, send request to the backend
           this.open2();
-          console.log('Login');
-          console.log('Username：', this.loginForm.username);
-          console.log('Password：', this.loginForm.password);
+          console.log("Login");
+          console.log("Username：", this.loginForm.email);
+          console.log("Password：", this.loginForm.password);
           // login event success, close modal
-          this.$emit('update-parent-data', 11111);
-          this.$emit('loginSuccess');
-        }else{
-          console.log('error submit!!');
+          this.$emit("update-parent-data", 11111);
+          this.$emit("loginSuccess");
+        } else {
+          console.log("error submit!!");
           return false;
         }
       });
-    }
+    },
   },
 };
 </script>
@@ -125,10 +144,10 @@ export default {
   position: center;
   display: inline-block;
   padding: 12px 55px;
-  background-color: #F9A51C;
+  background-color: #f9a51c;
   color: black;
   font-size: 14px;
-  border-color: #F9A51C;
+  border-color: #f9a51c;
   border-radius: 20px;
   cursor: pointer;
   transition: background-color 0.3s ease;

@@ -5,12 +5,16 @@ import 'element-ui/lib/theme-chalk/index.css';
 import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios';
+import './reset.css'; // css style reset
 
 Vue.config.productionTip = false
 Vue.use(ElementUI);
 Vue.use(VueAxios, axios);
 
-import './reset.css';
+axios.defaults.baseURL = "http://10.1.1.55:8081";
+axios.defaults.withCredentials = true;
+// 10.1.1.210:8081
+// 10.1.1.55:8081
 
 new Vue({
   router,

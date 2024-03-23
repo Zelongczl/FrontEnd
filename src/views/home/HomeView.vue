@@ -10,64 +10,72 @@
       <div class="lottie">
         <div class="lottie-structure" @click="getSubWindow">
           <lottie
-          :options="defaultOptions"
-          :height="50"
-          :width="50"
-          v-on:animCreated="handleAnimation"
-        ></lottie>
+            :options="defaultOptions"
+            :height="50"
+            :width="50"
+            v-on:animCreated="handleAnimation"
+          ></lottie>
         </div>
         <div v-if="showPanel" class="panel">
           <div class="panel-content">
             <button class="close-button" @click="closePanelAndReset">
-            <div class="button-container">
-             <img src="../../assets/cross.png" alt="Your Image" />
-            </div>
-          </button>
+              <div class="button-container">
+                <img src="../../assets/cross.png" alt="Your Image" />
+              </div>
+            </button>
             <button class="logout" @click="Logout">LOGOUT</button>
           </div>
         </div>
         <div v-if="showModal" class="modal" @click="closeModalOutside">
-        <!-- Modal content -->
-        <div class="modal-content" @click.stop>
-          <div v-if="activeTab === 'register' || activeTab === 'passwordReset'">
-            <button class="back-button" @click="switchTab('login')">
-            <div class="back-button-container">
-             <img src="../../assets/back.png" alt="Your Image" />
-          </div>
-          </button>
-          </div>
-          <div class="image-container">
-             <img src="../../assets/shrine_logo.png" alt="Your Image"/>
-          </div>
-          <button class="close-button" @click="closeModalAndReset">
-            <div class="button-container">
-             <img src="../../assets/cross.png" alt="Your Image" />
-          </div>
-          </button>
+          <!-- Modal content -->
+          <div class="modal-content" @click.stop>
+            <div
+              v-if="activeTab === 'register' || activeTab === 'passwordReset'"
+            >
+              <button class="back-button" @click="switchTab('login')">
+                <div class="back-button-container">
+                  <img src="../../assets/back.png" alt="Your Image" />
+                </div>
+              </button>
+            </div>
+            <div class="image-container">
+              <img src="../../assets/shrine_logo.png" alt="Your Image" />
+            </div>
+            <button class="close-button" @click="closeModalAndReset">
+              <div class="button-container">
+                <img src="../../assets/cross.png" alt="Your Image" />
+              </div>
+            </button>
 
-        <!-- Login and Registration Components -->
-        <div v-if="activeTab === 'login'">
-          <LoginForm @update-parent-data="updateToken" @loginSuccess="closeModal" />
-        </div>
-        <div v-else-if="activeTab === 'passwordReset'">
-          <FormData @resetSuccess="switchTab('login')" />
-        </div>
-        <div v-else>
-          <RegisterForm @registerSuccess="closeModal" />
-        </div>
-        <div v-if="activeTab === 'login'">
-          <div class="centered-text" @click="switchTab('passwordReset')">
-              <h2>Forgot Password</h2>
+            <!-- Login and Registration Components -->
+            <div v-if="activeTab === 'login'">
+              <LoginForm
+                @update-parent-data="updateToken"
+                @loginSuccess="closeModal"
+              />
             </div>
-            <div class="register-text">
-              <h2>I don't have account? </h2>
-              <div class="register-centered-text" @click="switchTab('register')">
-              <h2>Create Account</h2>
+            <div v-else-if="activeTab === 'passwordReset'">
+              <FormData @resetSuccess="switchTab('login')" />
             </div>
+            <div v-else>
+              <RegisterForm @registerSuccess="closeModal" />
+            </div>
+            <div v-if="activeTab === 'login'">
+              <div class="centered-text" @click="switchTab('passwordReset')">
+                <h2>Forgot Password</h2>
+              </div>
+              <div class="register-text">
+                <h2>I don't have account?</h2>
+                <div
+                  class="register-centered-text"
+                  @click="switchTab('register')"
+                >
+                  <h2>Create Account</h2>
+                </div>
+              </div>
             </div>
           </div>
-      </div>
-    </div>
+        </div>
       </div>
 
       <div class="circle"></div>
@@ -133,7 +141,7 @@
         >
       </div>
 
-      <div class="comic-tabs" v-for="tab in Covers" :key="tab.id">
+      <div class="comic-tabs" v-for="tab in ResponseData" :key="tab.id">
         <tab-view
           :comicsName="tab.title"
           :coverImg="tab.portraitImagePath"
@@ -144,7 +152,6 @@
           :info="tab"
         ></tab-view>
       </div>
-
     </div>
 
     <div class="floating">
@@ -164,8 +171,6 @@
         <img src="../../assets/floating/appstore1.png" alt="apple-store" />
       </div>
     </div>
-
-
   </div>
 </template>
 
@@ -175,17 +180,25 @@ import MainView from "./MainView.vue";
 import TabView from "./TabView.vue";
 import Lottie from "./lottie.vue";
 import * as animationData from "../../assets/lottie/login.json";
-import LoginForm from '../../components/LoginForm.vue';
+import LoginForm from "../../components/LoginForm.vue";
 import RegisterForm from "../../components/RegisterForm.vue";
 import FormData from "../../components/PasswordReset.vue";
+import VueCookies from "vue-cookies";
+
 export default {
-  components: { MainView, TabView, lottie: Lottie, LoginForm, RegisterForm,FormData},
+  components: {
+    MainView,
+    TabView,
+    lottie: Lottie,
+    LoginForm,
+    RegisterForm,
+    FormData,
+  },
   data() {
     return {
-      Token: null,
-      showModal:false,
-      showPanel:false,
-      activeTab:"login",
+      showModal: false,
+      showPanel: false,
+      activeTab: "login",
       mainImg: require("../../assets/main_exh/169081158264c7bcbe3cf55408.jpg"),
       carouselLeft: [
         require("../../assets/main_exh/168887812964aa3c3138945507.jpg"),
@@ -639,9 +652,9 @@ export default {
     this.getAll();
   },
   methods: {
-    closeModal(){
+    closeModal() {
       this.showModal = false;
-      this.activeTab = 'login';
+      this.activeTab = "login";
     },
     switchTab(tab) {
       this.activeTab = tab;
@@ -651,13 +664,13 @@ export default {
       const modalContent = document.querySelector(".modal-content");
       if (!modalContent.contains(event.target)) {
         this.showModal = false;
-        this.activeTab = 'login';
+        this.activeTab = "login";
       }
     },
     closeModalAndReset() {
       // Close the pop-up and reset the data
       this.showModal = false;
-      this.activeTab = 'login';
+      this.activeTab = "login";
     },
     closePanelAndReset() {
       // Close the pop-up and reset the data
@@ -674,7 +687,7 @@ export default {
     getAll: function () {
       var that = this;
       // 10.1.1.55:8080
-      axios.get("http://10.1.1.55:8080/home").then(
+      axios.get("/home").then(
         function (response) {
           console.log(response);
           that.ResponseData = response.data;
@@ -686,15 +699,17 @@ export default {
       );
     },
     getSubWindow() {
-      if(this.Token === null) {
+      if (this.Token === null) {
         this.showModal = true;
-      }else {
+      } else {
         this.showPanel = true;
       }
     },
     Logout() {
       this.Token = null;
-      axios.get("http://10.1.1.55:8080/logout").then(
+      console.log(this.Token);
+
+      axios.get("/logout").then(
         function (response) {
           console.log(response);
           console.log("successfully logout");
@@ -707,7 +722,7 @@ export default {
     },
     updateToken(newData) {
       this.Token = newData;
-    }
+    },
   },
   computed: {
     sortedCovers() {
@@ -737,6 +752,16 @@ export default {
         return res;
       }
     },
+    Token: {
+      get() {
+        return JSON.parse(localStorage.getItem("Token"));
+      },
+      set(value) {
+        console.log(value);
+
+        localStorage.setItem("Token", JSON.stringify(value));
+      },
+    },
   },
 };
 </script>
@@ -759,7 +784,7 @@ body {
 .lottie {
   position: relative;
   left: 473px;
-  top:-357px;
+  top: -357px;
   z-index: 5;
   margin-top: -50px;
 }
@@ -800,9 +825,9 @@ body {
 }
 .centered-text {
   display: flex;
-  justify-content: center; 
-  align-items: center; 
-  color: #F9A51C;
+  justify-content: center;
+  align-items: center;
+  color: #f9a51c;
   cursor: pointer;
   position: relative;
   padding-bottom: 10px;
@@ -810,8 +835,8 @@ body {
 }
 .register-centered-text {
   display: flex;
-  justify-content: center; 
-  color: #F9A51C;
+  justify-content: center;
+  color: #f9a51c;
   cursor: pointer;
   position: relative;
   font-size: 14px;
@@ -819,16 +844,16 @@ body {
 }
 .register-text {
   display: flex;
-  justify-content: center; 
+  justify-content: center;
   color: grey;
   cursor: pointer;
   position: relative;
   font-size: 16px;
 }
-.close-button{
+.close-button {
   position: absolute;
   size: 10px;
-  top:10px;
+  top: 10px;
   right: 10px;
   background-color: transparent;
   cursor: pointer;
@@ -838,7 +863,7 @@ body {
   position: relative;
   justify-content: center;
   align-items: center;
-  height: 100px; 
+  height: 100px;
 }
 
 .image-container img {
@@ -855,7 +880,7 @@ body {
   position: relative;
   justify-content: center;
   align-items: center;
-  height: 20px; 
+  height: 20px;
 }
 
 .button-container img {
@@ -871,7 +896,7 @@ body {
   position: relative;
   justify-content: center;
   align-items: center;
-  height: 20px; 
+  height: 20px;
 }
 
 .back-button-container img {
@@ -918,7 +943,7 @@ body {
   height: 40px;
   width: 150px;
   border-radius: 10px;
-  background-color: #F9A51C;
+  background-color: #f9a51c;
   font-weight: bold;
   cursor: pointer;
 }

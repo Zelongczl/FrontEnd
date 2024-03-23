@@ -38,7 +38,7 @@
         <div class="user-info clearfix">
           <!-- User Avatar -->
           <div class="cur-avatar">
-            <img src="../../assets/avatars/avatar_1.png" alt="cur_avatar" />
+            <img ref="ava" :src="avatar" alt="cur_avatar" />
           </div>
 
           <!-- User info -->
@@ -46,7 +46,7 @@
             <!-- Username -->
             <div class="username">
               <div class="name">
-                <span>{{username}}</span>
+                <span>{{ username }}</span>
               </div>
               <!-- <div class="tri">
                 <img src="../../assets/icons/triangle_icon.png" alt="unknown" />
@@ -58,7 +58,7 @@
               <el-progress
                 :show-text="false"
                 :stroke-width="15"
-                :percentage="30"
+                :percentage="50"
                 color="#F9A51C"
                 define-back-color="#EEEEEE"
                 type="line"
@@ -79,15 +79,33 @@
 
 <script>
 import axios from "axios";
+import Bus from "../../utils/EventBus.js";
 export default {
-  data(){
+  data() {
     return {
-      username: "Jin Cham Yuan Wai",
-    }
+      username: "Tester",
+      // avatar: "",
+    };
   },
-  methods: {
-  
-  }
+  methods: {},
+  created: function () {},
+  computed: {
+    avatar: {
+      get() {
+        return (
+          axios.defaults.baseURL + JSON.parse(localStorage.getItem("avatar")) ||
+          require("../../assets/avatars/avatar_1.png")
+        );
+      },
+      set(newValue) {
+        console.log(newValue);
+        this.$refs.ava.src = axios.defaults.baseURL + newValue;
+      },
+    },
+  },
+  created() {
+    Bus.$on("changeAvatar", (avatar) => (this.avatar = avatar));
+  },
 };
 </script>
     
@@ -185,11 +203,11 @@ export default {
   align-items: center;
   overflow: hidden;
   color: #eee;
-  
+
   /* vertical-align: text-bottom; */
 }
 
-.topbar .info .username .name span{
+.topbar .info .username .name span {
   flex: 1;
   text-align: center;
   white-space: nowrap;
@@ -229,82 +247,120 @@ export default {
 
 /* #region Clear Default Style */
 .container {
-    width: 1024px;
-    margin: 0 auto;
+  width: 1024px;
+  margin: 0 auto;
 }
-body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,legend,button,input,textarea,th,td{
-    margin: 0;
-    padding: 0;
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+p,
+blockquote,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+pre,
+form,
+fieldset,
+legend,
+button,
+input,
+textarea,
+th,
+td {
+  margin: 0;
+  padding: 0;
 }
 
-ul,ol {
-    list-style: none;
+ul,
+ol {
+  list-style: none;
 }
 
 img {
   display: block;
-	border:0;
+  border: 0;
 }
 
-b,strong {
-    font-weight: 400;
+b,
+strong {
+  font-weight: 400;
 }
 
-h1,h2,h3,h4,h5,h6 {
-    font-size: 100%;
-    font-weight: normal;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+  font-weight: normal;
 }
 
-i,em {
-    font-style: normal;
+i,
+em {
+  font-style: normal;
 }
 
-u,ins,s,del {
-    text-decoration: none;
+u,
+ins,
+s,
+del {
+  text-decoration: none;
 }
 
 table {
-    border: 1px solid #999;
-    border-spacing: 0;
-    border-collapse: collapse;
+  border: 1px solid #999;
+  border-spacing: 0;
+  border-collapse: collapse;
 }
 
-td,th {
-    border: 1px solid #999;
+td,
+th {
+  border: 1px solid #999;
 }
 
-input,button {
-    outline: none;
-    border:none;
+input,
+button {
+  outline: none;
+  border: none;
 }
 
 body {
-    font: 12px/1.5 "Microsoft YaHei", Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;
-    color: #333;
+  font: 12px/1.5 "Microsoft YaHei", Tahoma, Helvetica, Arial, "\5b8b\4f53",
+    sans-serif;
+  color: #333;
 }
 
 a {
-    text-decoration: none;
-    color: #eee;
+  text-decoration: none;
+  color: #eee;
 }
 
 a:hover {
-    color:#F9A51C;
-    text-decoration: none;
+  color: #f9a51c;
+  text-decoration: none;
 }
 
 .leftfix {
-    float: left;
+  float: left;
 }
 
 .rightfix {
-    float: right;
+  float: right;
 }
 
 .clearfix::after {
-    content: "";
-    display: block;
-    clear: both;
+  content: "";
+  display: block;
+  clear: both;
 }
 /* #endregion Clear Default Style */
 </style>

@@ -15,26 +15,34 @@
 
     <div class="app-main">
       <div class="app-box">
-
         <hand-view :info="info"></hand-view>
-
       </div>
       <section class="section-box app-box-bt">
-
         <div class="back">
           <div class="list-box">
-            <div style="width: 0px;" class="box">
+            <div style="width: 0px" class="box">
               <h1 class="title">Chapters</h1>
             </div>
-            <div class="list-item" v-for="(chapter, index) in chapters" :key="index">
-              <router-link :to="'reader'"> 
-              <chapter-view :chapterName="chapter.name" :index="index"
-                  :src="chapter.src"></chapter-view>
+            <div
+              class="list-item"
+              v-for="(chapter, index) in chapters"
+              :key="index"
+            >
+              <router-link :to="'reader'">
+                <chapter-view
+                  :chapterName="chapter.name"
+                  :index="index"
+                  :src="chapter.src"
+                ></chapter-view>
               </router-link>
             </div>
           </div>
         </div>
-        <popular-view class="pop-right" style="width: 450px" :list="rightList"></popular-view>
+        <popular-view
+          class="pop-right"
+          style="width: 450px"
+          :list="rightList"
+        ></popular-view>
       </section>
     </div>
   </div>
@@ -57,8 +65,8 @@ export default {
         },
         {
           src: require("../../assets/chapter-cover/Devil-Contract/1.jpg"),
-          name: "tesr1"
-        }
+          name: "tesr1",
+        },
       ],
       info: {},
       rightList: {},
@@ -75,7 +83,7 @@ export default {
   methods: {
     getDetail(ID) {
       var that = this;
-      var URL = "http://10.1.1.55:8080/home/" + this.comicID;
+      var URL = "/home/" + this.comicID;
       axios.get(URL).then(
         function (response) {
           console.log(response);
@@ -87,8 +95,8 @@ export default {
           console.log(err);
         }
       );
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -102,9 +110,7 @@ export default {
 }
 
 .section-box {
-
   background-color: rgba(59, 59, 59, 1);
-
 }
 
 .app-box {

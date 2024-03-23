@@ -1,26 +1,37 @@
 <template>
-    <div class="avatar-img">
-      
-        <img :src="avatar.avaImg" alt="avaImg" class="avaimg" style="source=">
-      
-    </div>
-  
+  <div class="avatar-img">
+    <img
+      :src="URL"
+      alt="avaImg"
+      class="avaimg"
+      style="source="
+      @click="changeAvatar(avatar.avaImg)"
+    />
+  </div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
   props: {
     avatar: Object,
   },
   data() {
-    return {
-    }
+    return {};
   },
-  computed:{
-    URL(){
-        let URL = this.avaImg;
-        return URL;
-    }
+  computed: {
+    URL() {
+      let URL = "http://10.1.1.55:8081" + this.avatar.avaImg;
+      console.log(URL);
+
+      return URL;
+    },
+  },
+  methods: {
+    changeAvatar(src) {
+      this.$emit("changeAvatar", src);
+      console.log("111");
+    },
   },
 };
 
