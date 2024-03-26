@@ -53,10 +53,16 @@ export default {
         },
       ],
       pages: [],
+      currentPageIndex:0
     };
   },
   created() {
     this.getPages();
+    this.sendDataToBackend();
+    window.addEventListener('scroll', this.checkForNewPage); // Add event listener for scroll events
+  },
+  destroyed() {
+    window.removeEventListener('scroll', this.checkForNewPage); // Clean up the event listener
   },
   methods: {
     goBack() {
@@ -77,6 +83,44 @@ export default {
       );
     },
   },
+
+
+//Increase experience points by reading a new page
+  checkForNewPage() {
+    let images = document.querySelectorAll('.image');// Assuming comic pages have the class 'image'
+    for (let i = 0; i < images.length; i++) {
+      let image = image[i];
+      let imageTop = image.offsetTop;
+      let imageBottom = imageTop + image.offsetHeight;
+      let viewportBottom = window.scrollY + window.innerHeight;
+
+      if (viewportBottom > imageTop && viewportBottom < imageBottom && i > this.currentPageIndex) {
+        this.currentPageIndex = i; // Update the current page index to the new page
+        console.log(`Reached new page: ${i + 1}`); // Call the method to increase experience or send any other data
+        this.sendDataToBackend(); // Exit the loop after finding the first new page
+        break;
+      }
+
+    }
+
+  },
+
+  sendDataToBackend(pageIndex) {
+    const data = {
+      message: 'Increase experience for reading a new page',
+      page: pageIndex + 1, // Adding 1 because arrays are zero-indexed but pages start from 1
+    };
+
+    axios.post('http://backend-endpoint/experience/increase',data)
+      .then(response => {
+        console.log('New page', pageIndex + 1, response);
+      })
+      .catch(error => {
+        console.error('Error increasing experience for reading a new page:', error);
+      });
+  }
+
+
 };
 </script>
 <style>
