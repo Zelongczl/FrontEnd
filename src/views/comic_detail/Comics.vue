@@ -53,13 +53,14 @@ export default {
         },
       ],
       pages: [],
-      currentPageIndex:0
+      currentPageIndex:0,
+      prePageIndex:0,
     };
   },
   created() {
     this.getPages();
     this.sendDataToBackend();
-    window.addEventListener('scroll', this.checkForNewPage); // Add event listener for scroll events
+    JSON.parse(localStorage.getItem(("userId"))) && window.addEventListener('scroll', this.debounce(this.checkForNewPage, 500)); // Add event listener for scroll events
   },
   destroyed() {
     window.removeEventListener('scroll', this.checkForNewPage); // Clean up the event listener
@@ -95,9 +96,10 @@ export default {
       let viewportBottom = window.scrollY + window.innerHeight;
 
       if (viewportBottom > imageTop && viewportBottom < imageBottom && i > this.currentPageIndex) {
+        this.prePageIndex = this.currentPageIndex
         this.currentPageIndex = i; // Update the current page index to the new page
         console.log(`Reached new page: ${i + 1}`); // Call the method to increase experience or send any other data
-        this.sendDataToBackend(); // Exit the loop after finding the first new page
+        this.sendDataToBackend(i); // Exit the loop after finding the first new page
         break;
       }
 
@@ -108,16 +110,42 @@ export default {
   sendDataToBackend(pageIndex) {
     const data = {
       message: 'Increase experience for reading a new page',
-      page: pageIndex + 1, // Adding 1 because arrays are zero-indexed but pages start from 1
+      page: pageIndex + 1 - this.prePageIndex, // Adding 1 because arrays are zero-indexed but pages start from 1
     };
 
-    axios.post('http://backend-endpoint/experience/increase',data)
-      .then(response => {
-        console.log('New page', pageIndex + 1, response);
-      })
+    // axios.post('http://backend-endpoint/experience/increase',data)
+    //   .then(response => {
+    //     console.log('New page', pageIndex + 1, response);
+    //   })
+    //   .catch(error => {
+    //     console.error('Error increasing experience for reading a new page:', error);
+    //   });
+
+    axios({
+      url:'/experience/increase',
+      method:'post',
+      data:{
+        data
+      },
+      headers: {
+        userId: JSON.parse(localStorage.getItem("userId")),
+        "Content-Type": "application/json",
+        page: pageIndex + 1 - this.prePageIndex
+
+      },
+    }).then(response => {
+      console.log('New page', pageIndex + 1, response);
+    })
       .catch(error => {
         console.error('Error increasing experience for reading a new page:', error);
       });
+  },
+  debounce(fn, t) {
+    let timer
+    return function() {
+      timer && clearTimeout(timer)
+      timer = setTimeout(fn, t)
+    }
   }
 
 

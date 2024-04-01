@@ -106,7 +106,6 @@ export default {
       }
     },
   },
-  created: function () {},
   computed: {
     avatar: {
       get() {
