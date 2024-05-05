@@ -58,15 +58,15 @@
               <el-progress
                 :show-text="false"
                 :stroke-width="15"
-                :percentage="50"
+                :percentage="progressPercentage"
                 color="#F9A51C"
                 define-back-color="#EEEEEE"
                 type="line"
               ></el-progress>
               <div class="lv-coin">
                 <span
-                  >LV.{{ level }} &nbsp;&nbsp;&nbsp;&nbsp;
-                  <i class="el-icon-orange"></i>&nbsp;&nbsp; {{ coins }}</span
+                  >LV.{{ level }} &nbsp;&nbsp;&nbsp;
+                  <i class="el-icon-orange"></i>&nbsp; {{ coins }}</span
                 >
               </div>
             </div>
@@ -83,45 +83,76 @@ import Bus from "../../utils/EventBus.js";
 export default {
   data() {
     return {
-      username: "Tester",
-      progressPercentage: 0,
+      progressPercentage: 70,
       level: 2,
-      coins: 0,
+      coins: 1000,
+      firstLogin: false
       // avatar: "",
     };
   },
   mounted() {
     this.fetchData();
+
   },
   methods: {
+    open2() {
+      this.$message({
+        message: "First time login today! + 25 EXP",
+        type: "success",
+      });
+    },
     async fetchData() {
       try {
-        const response = await axios.get("/backend-API-endpoint"); //Replace '/backend-API-endpoint' with the backend API endpoint
-        const data = response.data;
-        this.progressPercentage = data.progressPercentage; //Assume that the backend returns data 'progressPercentage'
-        this.level = data.level; //Assume the backend returns 'level'
-        this.coins = data.coins; //Assume the backend returns 'coins'
+        this.axios
+            .get("/user/expbar", {
+              headers: {
+                userId: JSON.parse(localStorage.getItem("userId"))
+              },
+            })
+            .then((resp) => {
+              const data = resp.data;
+              this.progressPercentage = data.progressPercentage; //Assume that the backend returns data 'progressPercentage'
+              this.level = data.level; //Assume the backend returns 'level'
+              this.coins = data.coins; //Assume the backend returns 'coins'
+              this.firstLogin = localStorage.getItem("firstLogin");
+              if(this.firstLogin=== "true"){
+                this.open2();
+                localStorage.setItem("firstLogin","false");
+              }
+              
+            })
       } catch (error) {
         console.error("Failed to fetch data:", error);
       }
     },
+
   },
+  created: function () {},
   computed: {
     avatar: {
       get() {
-        return (
-          axios.defaults.baseURL + JSON.parse(localStorage.getItem("avatar")) ||
-          require("../../assets/avatars/avatar_1.png")
-        );
+        if (JSON.parse(localStorage.getItem("Token"))) {
+          return (
+            axios.defaults.baseURL + JSON.parse(localStorage.getItem("avatar"))
+          );
+        } else {
+          return require("../../assets/avatars/avatar_1.png");
+        }
       },
       set(newValue) {
         console.log(newValue);
         this.$refs.ava.src = axios.defaults.baseURL + newValue;
       },
     },
+    username() {
+      return JSON.parse(localStorage.getItem("Token")) ? "Tester" : "Please login";
+    },
+    
+
   },
   created() {
     Bus.$on("changeAvatar", (avatar) => (this.avatar = avatar));
+
   },
 };
 </script>
@@ -255,8 +286,10 @@ export default {
   text-align: center;
   position: absolute;
   top: -1.5px;
-  left: 20%;
+  left: 10%;
   font-weight: bold;
+  font-size: 12px;
+  white-space: nowrap;
 }
 /* #endregion Exp Bar end */
 

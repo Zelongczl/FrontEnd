@@ -4,7 +4,6 @@
       :src="URL"
       alt="avaImg"
       class="avaimg"
-      style="source="
       @click="changeAvatar(avatar.avaImg)"
     />
   </div>
@@ -21,7 +20,7 @@ export default {
   },
   computed: {
     URL() {
-      let URL = "http://10.1.1.55:8081" + this.avatar.avaImg;
+      let URL = axios.defaults.baseURL + this.avatar.avaImg;
       console.log(URL);
 
       return URL;

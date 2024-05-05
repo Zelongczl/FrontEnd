@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   props: {
     stic: Object,
@@ -17,7 +18,7 @@ export default {
   },
   computed: {
     URL() {
-      let URL = "http://10.1.1.55:8081" + this.stic.StiImg;
+      let URL = axios.defaults.baseURL + this.stic.StiImg;
       console.log(URL);
 
       return URL;

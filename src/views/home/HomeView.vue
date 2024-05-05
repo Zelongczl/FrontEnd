@@ -140,8 +140,6 @@
           >Complete</span
         >
       </div>
-
-      <div class="comic-tabs" v-for="tab in ResponseData" :key="tab.id">
       <div class="comic-tabs" v-for="tab in ResponseData" :key="tab.id">
         <tab-view
           :comicsName="tab.title"
@@ -719,7 +717,9 @@ export default {
           console.log(err);
         }
       );
+      location.reload();
       this.showPanel = false;
+      
     },
     updateToken(newData) {
       this.Token = newData;

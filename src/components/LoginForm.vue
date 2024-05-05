@@ -96,38 +96,14 @@ export default {
                 localStorage.setItem("access-user", JSON.stringify(data));
                 localStorage.setItem("Token", JSON.stringify(data.jwt));
                 localStorage.setItem("userId", JSON.stringify(data.userId));
+                localStorage.setItem("firstLogin",JSON.stringify(data.loginExp));
+                localStorage.setItem("message","First time login today! + exp 25");
                 console.log("Login");
                 console.log("Username：", this.loginForm.username);
                 console.log("Password：", this.loginForm.password);
                 this.$emit("loginSuccess");
                 this.$emit("update-parent-data", 11111);
-
-
-                  //Determine whether the user logs in for the first time today on the front end and feedback the first login to the back end
-                  const today = new Date().toISOString().slice(0,10);
-                  const userId = data.userId; // Assuming this is the user ID obtained from the backend response
-                  const loginRecords = JSON.parse(localStorage.getItem('loginRecords')) || [];
-
-                  const isUserLoggedInToday = loginRecords.some(record => record.date === today && record.userId === userId);
-
-                  if (!isUserLoggedInToday) {
-                      this.axios.post('http://localhost:9090/', {
-                          message: 'first time',
-                          userId: userId
-                      }, {
-                          headers: {
-                              'Content-Type': 'application/json'
-                          }
-                      }).then((response) => {
-                          console.log('Sent first login of the day info to backend');
-                      }).catch((error) => {
-                          console.error('Error sending first login of the day info', error);
-                      });
-                  }
-                  loginRecords.push({date:today, userId: userId});
-                  localStorage.setItem('loginRecords', JSON.stringify(loginRecords));
-
-
+                location.reload();
               }
             })
             .catch((error) => {
@@ -182,4 +158,5 @@ export default {
 }
 </style>
 
-
+  
+    
